@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -27,10 +28,6 @@ public class User {
     @Column(name = "date_of_birth")
     @NotEmpty(message = "Ngày sinh không được để trống")
     public String dateOfBirth;
-
-    @NotEmpty(message = "Email cannot be empty")
-    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "Email is invalid")
-    private String emailMember;
 
     @Column(name = "address_user")
     @NotEmpty(message = "Address cannot be empty")
@@ -68,6 +65,14 @@ public class User {
     @JsonBackReference
     private List<ProductTransaction> productTransactions;
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "id_user"),
+            inverseJoinColumns = @JoinColumn(name = "id_role")
+    )
+    private Set<Role> roles;
+
     public User() {}
 
     public String getId() {
@@ -92,14 +97,6 @@ public class User {
 
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getEmailMember() {
-        return emailMember;
-    }
-
-    public void setEmailMember(String emailMember) {
-        this.emailMember = emailMember;
     }
 
     public String getAddress() {
@@ -172,5 +169,13 @@ public class User {
 
     public void setProductTransactions(List<ProductTransaction> productTransactions) {
         this.productTransactions = productTransactions;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
