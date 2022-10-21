@@ -22,6 +22,8 @@ public class Role {
 
     public Role() {}
 
+    public Role(String name) {}
+
     public Long getId() {
         return id;
     }

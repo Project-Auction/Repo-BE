@@ -73,6 +73,10 @@ public class User {
     )
     private Set<Role> roles;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "province_id", referencedColumnName = "province_id")
+    private Province province;
+
     public User() {}
 
     public String getId() {
@@ -169,6 +173,14 @@ public class User {
 
     public void setProductTransactions(List<ProductTransaction> productTransactions) {
         this.productTransactions = productTransactions;
+    }
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
     }
 
     public Set<Role> getRoles() {

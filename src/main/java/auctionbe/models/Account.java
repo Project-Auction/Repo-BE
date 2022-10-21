@@ -22,7 +22,7 @@ public class Account {
 
     public Boolean isBlocked;
 
-    private LocalDateTime lastLogin;
+    private String lastLogin;
 
     private String password;
 
@@ -63,11 +63,11 @@ public class Account {
         this.isBlocked = isBlocked;
     }
 
-    public LocalDateTime getLastLogin() {
+    public String getLastLogin() {
         return lastLogin;
     }
 
-    public void setLastLogin(LocalDateTime lastLogin) {
+    public void setLastLogin(String lastLogin) {
         this.lastLogin = lastLogin;
     }
 

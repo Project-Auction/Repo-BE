@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
-                // dont authenticate this paticular request
+                // dont authenticate this particular request
                 .authorizeRequests().antMatchers("/authenticate" ,"/sign-up").permitAll()
                 .antMatchers("/user/**").hasAnyRole("MEMBER", "MANAGER")
                 .antMatchers("/admin/**").hasAnyRole("MANAGER")
