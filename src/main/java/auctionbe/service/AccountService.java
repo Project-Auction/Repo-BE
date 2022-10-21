@@ -2,7 +2,6 @@ package auctionbe.service;
 
 import auctionbe.models.Account;
 import auctionbe.models.Role;
-import auctionbe.models.User;
 import auctionbe.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,6 +18,14 @@ import java.util.Set;
 public class AccountService implements UserDetailsService {
     @Autowired
     private AccountRepository accountRepository;
+
+    public Account save(Account account) {
+        return accountRepository.save(account);
+    }
+
+    public Account findAccountByEmail(String email) {
+        return accountRepository.findAccountByEmail(email);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

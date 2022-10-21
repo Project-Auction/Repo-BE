@@ -1,8 +1,10 @@
 package auctionbe.config;
 
 import auctionbe.models.Account;
+import auctionbe.models.Rank;
 import auctionbe.models.Role;
 import auctionbe.repository.AccountRepository;
+import auctionbe.repository.RankRepository;
 import auctionbe.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -24,6 +26,9 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private RankRepository rankRepository;
 
     public static String EncryptPasswordUtils(String password){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -67,5 +72,26 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 //            member.setRoles(roles);
 //            accountRepository.save(member);
 //        }
+
+        //Adding rank
+        if (rankRepository.findByName("BROZER")==null){
+            rankRepository.save(new Rank("BROZER"));
+        }
+
+        if (rankRepository.findByName("SILVER")==null){
+            rankRepository.save(new Rank("SILVER"));
+        }
+
+        if (rankRepository.findByName("RANK_GOLD")==null){
+            rankRepository.save(new Rank("RANK_GOLD"));
+        }
+
+        if (rankRepository.findByName("PLATINUM")==null){
+            rankRepository.save(new Rank("PLATINUM"));
+        }
+
+        if (rankRepository.findByName("DIAMOND")==null){
+            rankRepository.save(new Rank("DIAMOND"));
+        }
     }
 }

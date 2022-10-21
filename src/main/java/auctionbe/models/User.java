@@ -22,25 +22,22 @@ public class User {
 
     @Column(name = "user_name")
     @NotEmpty(message = "Username not be empty")
-    @Pattern(regexp = "^[A-Za-zỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđ' ]+$", message = "Username is invalid")
     private String name;
 
     @Column(name = "date_of_birth")
-    @NotEmpty(message = "Ngày sinh không được để trống")
+    @NotEmpty(message = "Date of birth cannot be empty")
     public String dateOfBirth;
 
     @Column(name = "address_user")
-    @NotEmpty(message = "Address cannot be empty")
     private String address;
 
-    @Column(name = "phone_member")
+    @Column(name = "phone_number")
     @NotEmpty(message = "Phone number cannot be empty")
-    @Pattern(regexp = "^(84|0[3|5|7|8|9])+([0-9]{9})$", message = "Phone number is invalid")
-    private String phoneMember;
+    private String phoneNumber;
 
-    @Column(name = "id_card_member")
-    @NotEmpty(message = "Id card cannot be empty")
-    private String idCardMember;
+    @Column(name = "identity_number")
+    @NotEmpty(message = "Identity number cannot be empty")
+    private String identityNumber;
 
     @Column(name = "paypal_member")
     private String paypalMember;
@@ -74,7 +71,7 @@ public class User {
     private Set<Role> roles;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "province_id", referencedColumnName = "province_id")
+    @JoinColumn(name = "province_id", referencedColumnName = "province_id" , nullable = true)
     private Province province;
 
     public User() {}
@@ -111,20 +108,20 @@ public class User {
         this.address = address;
     }
 
-    public String getPhoneMember() {
-        return phoneMember;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhoneMember(String phoneMember) {
-        this.phoneMember = phoneMember;
+    public void setPhoneNumber(String phoneMember) {
+        this.phoneNumber = phoneMember;
     }
 
-    public String getIdCardMember() {
-        return idCardMember;
+    public String getIdentityNumber() {
+        return identityNumber;
     }
 
-    public void setIdCardMember(String idCardMember) {
-        this.idCardMember = idCardMember;
+    public void setIdentityNumber(String identityNumber) {
+        this.identityNumber = identityNumber;
     }
 
     public String getPaypalMember() {
