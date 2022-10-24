@@ -97,6 +97,6 @@ public class SignUpController {
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         }
 
-        return ResponseEntity.ok("Register successfully!");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

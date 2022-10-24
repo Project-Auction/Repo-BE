@@ -25,18 +25,15 @@ public class User {
     private String name;
 
     @Column(name = "date_of_birth")
-    @NotEmpty(message = "Date of birth cannot be empty")
     public String dateOfBirth;
 
     @Column(name = "address_user")
     private String address;
 
     @Column(name = "phone_number")
-    @NotEmpty(message = "Phone number cannot be empty")
     private String phoneNumber;
 
     @Column(name = "identity_number")
-    @NotEmpty(message = "Identity number cannot be empty")
     private String identityNumber;
 
     @Column(name = "paypal_member")

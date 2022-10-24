@@ -12,7 +12,7 @@ public class UserRegisterDTO {
     public String fullName;
 
     @NotEmpty(message = "Birthday is not empty")
-//    @Pattern(regexp = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$" , message = "Birthday is invalid")
+    @Pattern(regexp = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$" , message = "Birthday is invalid")
     public String dateOfBirth;
 
     @NotEmpty(message = "Email cannot be empty")

@@ -3,9 +3,11 @@ package auctionbe.config;
 import auctionbe.models.Account;
 import auctionbe.models.Rank;
 import auctionbe.models.Role;
+import auctionbe.models.User;
 import auctionbe.repository.AccountRepository;
 import auctionbe.repository.RankRepository;
 import auctionbe.repository.RoleRepository;
+import auctionbe.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -30,6 +32,9 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
     @Autowired
     private RankRepository rankRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public static String EncryptPasswordUtils(String password){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.encode(password);
@@ -47,31 +52,44 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             roleRepository.save(new Role("ROLE_BLOCK"));
         }
         // Add manager
-//        if (accountRepository.findAccountByEmail("manager@aution.com") == null){
-//            Account manager = new Account();
-//            manager.setEmail("manager@aution.com");
-//            manager.setPassword(EncryptPasswordUtils("123123"));
-//            manager.setIsBlocked(false);
-//            manager.setLastLogin(String.valueOf(LocalDate.now()));
-//            HashSet<Role> roles = new HashSet<>();
-//            roles.add(roleRepository.findByNameRole("ROLE_MANAGER"));
-//            roles.add(roleRepository.findByNameRole("ROLE_MEMBER"));
-//            manager.setRoles(roles);
-//            accountRepository.save(manager);
-//        }
-//
-//        //Add users
-//        if (accountRepository.findAccountByEmail("member@aution.com") == null){
-//            Account member = new Account();
-//            member.setEmail("member@aution.com");
-//            member.setPassword(EncryptPasswordUtils("123123"));
-//            member.setIsBlocked(false);
-//            member.setLastLogin(String.valueOf(LocalDate.now()));
-//            HashSet<Role> roles = new HashSet<>();
-//            roles.add(roleRepository.findByNameRole("ROLE_MEMBER"));
-//            member.setRoles(roles);
-//            accountRepository.save(member);
-//        }
+        if (accountRepository.findAccountByEmail("manager@aution.com") == null){
+            Account manager = new Account();
+            User userSave = new User();
+            manager.setEmail("manager@aution.com");
+            manager.setPassword(EncryptPasswordUtils("123123"));
+            manager.setIsBlocked(false);
+            manager.setLastLogin(String.valueOf(LocalDate.now()));
+            HashSet<Role> roles = new HashSet<>();
+            roles.add(roleRepository.findByNameRole("ROLE_MANAGER"));
+            roles.add(roleRepository.findByNameRole("ROLE_MEMBER"));
+            manager.setRoles(roles);
+
+            /* Save user */
+            userSave.setName("Admin");
+            userSave.setAccount(manager);
+
+            userRepository.save(userSave);
+            accountRepository.save(manager);
+        }
+
+        //Add users
+        if (accountRepository.findAccountByEmail("member@aution.com") == null){
+            Account member = new Account();
+            User userSave = new User();
+            member.setEmail("member@aution.com");
+            member.setPassword(EncryptPasswordUtils("123123"));
+            member.setIsBlocked(false);
+            member.setLastLogin(String.valueOf(LocalDate.now()));
+            HashSet<Role> roles = new HashSet<>();
+            roles.add(roleRepository.findByNameRole("ROLE_MEMBER"));
+            member.setRoles(roles);
+
+            /* Save user */
+            userSave.setName("Member");
+            userSave.setAccount(member);
+            userRepository.save(userSave);
+            accountRepository.save(member);
+        }
 
         //Adding rank
         if (rankRepository.findByName("BROZER")==null){
