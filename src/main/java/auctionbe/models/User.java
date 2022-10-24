@@ -59,14 +59,6 @@ public class User {
     @JsonBackReference
     private List<ProductTransaction> productTransactions;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "id_user"),
-            inverseJoinColumns = @JoinColumn(name = "id_role")
-    )
-    private Set<Role> roles;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "province_id", referencedColumnName = "province_id" , nullable = true)
     private Province province;
@@ -175,13 +167,5 @@ public class User {
 
     public void setProvince(Province province) {
         this.province = province;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
     }
 }

@@ -1,5 +1,6 @@
 package auctionbe.dto;
 
+import auctionbe.models.Province;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
@@ -7,7 +8,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 public class UserRegisterDTO {
-    @Column(name = "user_name")
     @NotEmpty(message = "Username not be empty")
     public String fullName;
 
@@ -27,6 +27,34 @@ public class UserRegisterDTO {
 
     @Length(min = 6 , max = 30 , message = "Length password must be between 9 and 30")
     public String password;
+
+    public String ward;
+    public String district;
+    public String city;
+
+    public String getWard() {
+        return ward;
+    }
+
+    public void setWard(String ward) {
+        this.ward = ward;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public UserRegisterDTO() {}
 

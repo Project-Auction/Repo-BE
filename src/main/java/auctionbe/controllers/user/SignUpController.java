@@ -2,10 +2,7 @@ package auctionbe.controllers.user;
 
 import auctionbe.dto.UserRegisterDTO;
 import auctionbe.models.*;
-import auctionbe.service.AccountService;
-import auctionbe.service.RankService;
-import auctionbe.service.RoleService;
-import auctionbe.service.UserService;
+import auctionbe.service.*;
 import auctionbe.utils.EncryptPasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +29,10 @@ public class SignUpController {
     private RankService rankService;
 
     @Autowired
-            private RoleService roleService;
+    private ProvinceService provinceService;
+
+    @Autowired
+    private RoleService roleService;
 
     ApiError apiError = new ApiError();
 
@@ -43,7 +43,7 @@ public class SignUpController {
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         }
 
-        Account userExisting= null;
+        Account userExisting = null;
         Account accountSaved = new Account();
         User userSaved = new User();
         /* Get rank */
@@ -84,15 +84,23 @@ public class SignUpController {
             accountSaved.setLastLogin(String.valueOf(LocalDate.now()));
             userSaved.setAccount(accountSaved);
 
+            /* Save province */
+            Province province = new Province();
+            province.setCity(reqBody.getCity());
+            province.setDistrict(reqBody.getDistrict());
+            province.setWard(reqBody.getWard());
+            Province provinceSaved = provinceService.save(province);
+            userSaved.setProvince(provinceSaved);
+
             /* Initial authorization */
             Set<Role> roles = new HashSet<>();
             Role role = roleService.findByNameRole("ROLE_MEMBER");
             roles.add(role);
-            userSaved.setRoles(roles);
+            accountSaved.setRoles(roles);
 
             accountService.save(accountSaved);
             userService.save(userSaved);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             apiError = new ApiError(HttpStatus.BAD_REQUEST, "Credential invalid, Please check your input again");
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         }
