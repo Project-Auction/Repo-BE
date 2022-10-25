@@ -15,9 +15,10 @@ public class JwtResponse implements Serializable {
     private Set<Role> roles;
     private String token;
 
-    public JwtResponse(String accessToken, String accountId, String username, Set<Role> roles) {
+    public JwtResponse(String accessToken, String accountId , String email , String username, Set<Role> roles) {
         this.token = accessToken;
         this.accountId = accountId;
+        this.email = email;
         this.username = username;
         this.roles = roles;
     }
