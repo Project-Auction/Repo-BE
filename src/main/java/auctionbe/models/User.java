@@ -22,25 +22,19 @@ public class User {
 
     @Column(name = "user_name")
     @NotEmpty(message = "Username not be empty")
-    @Pattern(regexp = "^[A-Za-zỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđ' ]+$", message = "Username is invalid")
     private String name;
 
     @Column(name = "date_of_birth")
-    @NotEmpty(message = "Ngày sinh không được để trống")
     public String dateOfBirth;
 
     @Column(name = "address_user")
-    @NotEmpty(message = "Address cannot be empty")
     private String address;
 
-    @Column(name = "phone_member")
-    @NotEmpty(message = "Phone number cannot be empty")
-    @Pattern(regexp = "^(84|0[3|5|7|8|9])+([0-9]{9})$", message = "Phone number is invalid")
-    private String phoneMember;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
-    @Column(name = "id_card_member")
-    @NotEmpty(message = "Id card cannot be empty")
-    private String idCardMember;
+    @Column(name = "identity_number")
+    private String identityNumber;
 
     @Column(name = "paypal_member")
     private String paypalMember;
@@ -65,13 +59,9 @@ public class User {
     @JsonBackReference
     private List<ProductTransaction> productTransactions;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "id_user"),
-            inverseJoinColumns = @JoinColumn(name = "id_role")
-    )
-    private Set<Role> roles;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "province_id", referencedColumnName = "province_id" , nullable = true)
+    private Province province;
 
     public User() {}
 
@@ -107,20 +97,20 @@ public class User {
         this.address = address;
     }
 
-    public String getPhoneMember() {
-        return phoneMember;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhoneMember(String phoneMember) {
-        this.phoneMember = phoneMember;
+    public void setPhoneNumber(String phoneMember) {
+        this.phoneNumber = phoneMember;
     }
 
-    public String getIdCardMember() {
-        return idCardMember;
+    public String getIdentityNumber() {
+        return identityNumber;
     }
 
-    public void setIdCardMember(String idCardMember) {
-        this.idCardMember = idCardMember;
+    public void setIdentityNumber(String identityNumber) {
+        this.identityNumber = identityNumber;
     }
 
     public String getPaypalMember() {
@@ -171,11 +161,11 @@ public class User {
         this.productTransactions = productTransactions;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Province getProvince() {
+        return province;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setProvince(Province province) {
+        this.province = province;
     }
 }

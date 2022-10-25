@@ -8,12 +8,14 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "ranks")
 public class Rank {
     @Id
     @Column(name = "rank_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rankId;
 
+    @Column(name = "rank_name")
     private String rankName;
 
     @OneToMany(mappedBy = "rank")
@@ -21,6 +23,10 @@ public class Rank {
     private List<User> users;
 
     public Rank() {}
+
+    public Rank(String rankName) {
+        this.rankName = rankName;
+    }
 
     public Long getRankId() {
         return rankId;

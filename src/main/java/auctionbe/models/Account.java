@@ -3,6 +3,7 @@ package auctionbe.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -22,8 +23,10 @@ public class Account {
 
     public Boolean isBlocked;
 
-    private LocalDateTime lastLogin;
+    private String lastLogin;
 
+    @NotEmpty(message = "Password cannot be empty")
+    @Length(min = 6 , max = 30 , message = "Length password must be between 9 and 30")
     private String password;
 
     private String token;
@@ -63,11 +66,11 @@ public class Account {
         this.isBlocked = isBlocked;
     }
 
-    public LocalDateTime getLastLogin() {
+    public String getLastLogin() {
         return lastLogin;
     }
 
-    public void setLastLogin(LocalDateTime lastLogin) {
+    public void setLastLogin(String lastLogin) {
         this.lastLogin = lastLogin;
     }
 
