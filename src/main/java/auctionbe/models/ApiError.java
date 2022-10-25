@@ -20,6 +20,14 @@ public class ApiError {
         this.debugMessage = debugMessage;
     }
 
+    public String getDebugMessage() {
+        return debugMessage;
+    }
+
+    public void setDebugMessage(String debugMessage) {
+        this.debugMessage = debugMessage;
+    }
+
     public HttpStatus getHttpStatus() {
         return httpStatus;
     }

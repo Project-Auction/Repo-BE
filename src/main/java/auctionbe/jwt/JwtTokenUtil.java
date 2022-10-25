@@ -19,7 +19,7 @@ public class JwtTokenUtil implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenUtil.class);
 
-    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+    public static final long JWT_TOKEN_VALIDITY = 3600 * 1000;
 
     /* set private key */
     @Value("${jwt.secret}")

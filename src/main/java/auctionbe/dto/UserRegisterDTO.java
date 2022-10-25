@@ -25,6 +25,7 @@ public class UserRegisterDTO {
     @NotEmpty(message = "Id card cannot be empty")
     public String identityNumber;
 
+    @NotEmpty(message = "Password cannot be empty")
     @Length(min = 6 , max = 30 , message = "Length password must be between 9 and 30")
     public String password;
 

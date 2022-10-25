@@ -1,5 +1,6 @@
 package auctionbe.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy = "roles" ,fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+    @JsonBackReference
     private Set<Account> accounts;
 
     public Role() {}
