@@ -26,7 +26,7 @@ public class UserRegisterDTO {
     public String identityNumber;
 
     @NotEmpty(message = "Password cannot be empty")
-    @Length(min = 6 , max = 30 , message = "Length password must be between 9 and 30")
+    @Length(min = 6 , max = 30 , message = "Length password must be between 6 and 30")
     public String password;
 
     public String ward;
