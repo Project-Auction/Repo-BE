@@ -35,7 +35,7 @@ public class SecurityController {
     ApiError apiError = new ApiError();
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<?> handleLogin(@Valid @ModelAttribute JwtRequest authenticateRequest, BindingResult bindingResult) {
+    public ResponseEntity<?> handleLogin(@Valid @RequestBody JwtRequest authenticateRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             apiError = new ApiError(HttpStatus.FORBIDDEN, "Missing some data, Please check your inputs!");
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
