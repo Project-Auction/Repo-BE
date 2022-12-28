@@ -26,7 +26,7 @@ public class Account {
     private String lastLogin;
 
     @NotEmpty(message = "Password cannot be empty")
-    @Length(min = 6, max = 30, message = "Length password must be between 6 and 30")
+    @Length(min = 6, max = 100, message = "Length password must be between 6 and 100")
     private String password;
 
     private String token;
