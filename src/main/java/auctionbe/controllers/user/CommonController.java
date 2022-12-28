@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/request-common")
+@RequestMapping(value = "/api/request-common")
 @CrossOrigin(origins = "*")
 public class CommonController {
     @Autowired

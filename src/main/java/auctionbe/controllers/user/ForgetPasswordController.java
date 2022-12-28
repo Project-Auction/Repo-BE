@@ -20,7 +20,7 @@ import java.io.UnsupportedEncodingException;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(value = "/auth")
+@RequestMapping(value = "/api/auth")
 public class ForgetPasswordController {
     @Autowired
     private JavaMailSender javaMailSender;
@@ -153,19 +153,6 @@ public class ForgetPasswordController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    /* Get the password of the previously used user by resetting the pwd token*/
-//    @RequestMapping(value = "/reset-password/check-password", method = RequestMethod.GET)
-//    public ResponseEntity<?> checkPasswordUsedBefore(@RequestParam(value = "token") String token, @RequestParam(value = "password") String newPassword) {
-//        Account account = accountService.checkPasswordUsed(token, newPassword);
-//
-//        if (account == null) {
-//            apiError = new ApiError(HttpStatus.BAD_REQUEST, "You used this password recently. Please choose a different one.");
-//            return new ResponseEntity<>(apiError, apiError.getHttpStatus());
-//        }
-//
-//        return new ResponseEntity<>(account, HttpStatus.OK);
-//    }
 
     /* Check token existing */
     @RequestMapping(value = "/check-token-password/{token}", method = RequestMethod.GET)

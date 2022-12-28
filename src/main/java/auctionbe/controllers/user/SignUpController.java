@@ -17,7 +17,7 @@ import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(value = "/auth")
+@RequestMapping(value = "/api/auth")
 public class SignUpController {
     @Autowired
     private AccountService accountService;
