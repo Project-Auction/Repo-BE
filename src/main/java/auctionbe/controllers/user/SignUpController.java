@@ -37,7 +37,7 @@ public class SignUpController {
     ApiError apiError = new ApiError();
 
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
-    public ResponseEntity<?> handleSignUp(@Valid @ModelAttribute UserRegisterDTO reqBody, BindingResult bindingResult) {
+    public ResponseEntity<?> handleSignUp(@Valid @RequestBody UserRegisterDTO reqBody, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             apiError = new ApiError(HttpStatus.BAD_REQUEST, "Credential invalid, Please check your input again");
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
@@ -86,11 +86,13 @@ public class SignUpController {
 
             /* Save province */
             Province province = new Province();
-            province.setCity(reqBody.getCity());
-            province.setDistrict(reqBody.getDistrict());
-            province.setWard(reqBody.getWard());
-            Province provinceSaved = provinceService.save(province);
-            userSaved.setProvince(provinceSaved);
+            if(reqBody.getCity() != null || reqBody.getWard() != null || reqBody.getDistrict() != null) {
+                province.setCity(reqBody.getCity());
+                province.setDistrict(reqBody.getDistrict());
+                province.setWard(reqBody.getWard());
+                Province provinceSaved = provinceService.save(province);
+                userSaved.setProvince(provinceSaved);
+            }
 
             /* Initial authorization */
             Set<Role> roles = new HashSet<>();
