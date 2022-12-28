@@ -50,9 +50,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable()
+        httpSecurity.cors().and().csrf().disable()
                 // dont authenticate this particular request
-                .authorizeRequests().antMatchers("/authenticate" ,"/auth/**").permitAll()
+                .authorizeRequests().antMatchers("/api/authenticate" ,"/api/auth/**" , "/api/request-common/**").permitAll()
                 .antMatchers("/user/**").hasAnyRole("MEMBER", "MANAGER")
                 .antMatchers("/admin/**").hasAnyRole("MANAGER")
                 // all other request need to be authenticated

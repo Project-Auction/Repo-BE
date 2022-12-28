@@ -16,7 +16,7 @@ import java.util.Set;
 public class User {
     @Id
     @Column(name = "user_id")
-    @GeneratedValue(generator= "uuid")
+    @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
@@ -60,10 +60,11 @@ public class User {
     private List<ProductTransaction> productTransactions;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "province_id", referencedColumnName = "province_id" , nullable = true)
+    @JoinColumn(name = "province_id", referencedColumnName = "province_id", nullable = true)
     private Province province;
 
-    public User() {}
+    public User() {
+    }
 
     public String getId() {
         return id;
