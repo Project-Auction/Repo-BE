@@ -41,6 +41,11 @@ public class AccountService implements UserDetailsService {
         }
     }
 
+    /* Find by id */
+    public Account findAccountById(String id) {
+        return accountRepository.findById(id).orElse(null);
+    }
+
     /* Get user by token */
     public Account findAccountByToken(String token) {
         return accountRepository.findAccountByToken(token);
@@ -57,13 +62,14 @@ public class AccountService implements UserDetailsService {
     }
 
     /* Get the password of the previously used user by resetting the pwd token*/
-    public void checkPasswordUsed(String token, String newPassword) {
-        Account account = findAccountByToken(token);
+    public boolean checkPasswordUsed(Account account, String newPassword) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         if (encoder.matches(newPassword, account.getPassword())) {
-            throw new IllegalArgumentException("You used this password recently. Please choose a different one.");
+//            throw new IllegalArgumentException("You used this password recently. Please choose a different one.");
+            return true;
         }
+        return false;
     }
 
     @Override

@@ -21,7 +21,7 @@ import java.io.UnsupportedEncodingException;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(value = "/api/auth")
-public class ForgetPasswordController {
+public class PasswordController {
     @Autowired
     private JavaMailSender javaMailSender;
 
@@ -137,7 +137,7 @@ public class ForgetPasswordController {
             }
 
             // Check password
-            accountService.checkPasswordUsed(token, newPassword);
+            accountService.checkPasswordUsed(account, newPassword);
 
             accountService.updatePassword(account, newPassword);
         } catch (AccountNotFoundException ex) {
@@ -168,6 +168,69 @@ public class ForgetPasswordController {
 
         if (account == null) {
             apiError = new ApiError(HttpStatus.REQUEST_TIMEOUT, "Token expired");
+            return new ResponseEntity<>(apiError, apiError.getHttpStatus());
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /* Update password */
+    @RequestMapping(value = "/update-password/{userId}", method = RequestMethod.PATCH)
+    public ResponseEntity<?> handleUpdatePassword(@RequestParam(value = "newPassword") String newPassword, @PathVariable String userId) {
+        Account account = null;
+        try {
+            account = accountService.findAccountById(userId);
+
+            if (account == null) {
+                throw new AccountNotFoundException("Account doesn't existing");
+            }
+
+            /* Check new password */
+            if (accountService.checkPasswordUsed(account, newPassword)) {
+                throw new IllegalArgumentException("You used this password recently. Please choose a different one.");
+            } else {
+                accountService.updatePassword(account, newPassword);
+            }
+
+        } catch (AccountNotFoundException ex) {
+            apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getMessage());
+            return new ResponseEntity<>(apiError, apiError.getHttpStatus());
+        } catch (IllegalArgumentException ex) {
+            apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
+            return new ResponseEntity<>(apiError, apiError.getHttpStatus());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong! Please try again");
+            return new ResponseEntity<>(apiError, apiError.getHttpStatus());
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /* Handle check matching with old password */
+    @RequestMapping(value = "/matching-password/{userId}", method = RequestMethod.POST)
+    public ResponseEntity<?> handleCheckMatchingPassword(@RequestParam("oldPassword") String oldPassword, @PathVariable String userId) {
+        Account account = null;
+        try {
+            account = accountService.findAccountById(userId);
+
+            if (account == null) {
+                throw new AccountNotFoundException("Account doesn't existing");
+            }
+
+            /* Check old password */
+            if (!accountService.checkPasswordUsed(account, oldPassword)) {
+                throw new IllegalArgumentException("The password you entered does not match your current password.");
+            }
+        } catch (AccountNotFoundException ex) {
+            apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getMessage());
+            return new ResponseEntity<>(apiError, apiError.getHttpStatus());
+        } catch (IllegalArgumentException ex) {
+            apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
+            return new ResponseEntity<>(apiError, apiError.getHttpStatus());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong! Please try again");
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         }
 
