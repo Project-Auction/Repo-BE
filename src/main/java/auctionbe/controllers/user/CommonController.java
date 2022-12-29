@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/request-common")
+@RequestMapping(value = "/api/request-common")
 @CrossOrigin(origins = "*")
 public class CommonController {
     @Autowired
@@ -22,6 +22,7 @@ public class CommonController {
 
     ApiError apiError = new ApiError();
 
+    /* Get categories */
     @RequestMapping(value = "/categories", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCategories() {
         List<Category> categories;
