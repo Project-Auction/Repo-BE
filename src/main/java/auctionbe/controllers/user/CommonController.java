@@ -22,6 +22,7 @@ public class CommonController {
 
     ApiError apiError = new ApiError();
 
+    /* Get categories */
     @RequestMapping(value = "/categories", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCategories() {
         List<Category> categories;
