@@ -38,8 +38,6 @@ public class Product {
 
     private LocalDateTime createdDay;
 
-    private Boolean flagDelete;
-
     private Boolean biddingStatus;
 
     private Boolean approvalStatus;
@@ -60,4 +58,140 @@ public class Product {
     private Invoice invoice;
 
     public Product() {}
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getCodeProduct() {
+        return codeProduct;
+    }
+
+    public void setCodeProduct(String codeProduct) {
+        this.codeProduct = codeProduct;
+    }
+
+    public String getNameProduct() {
+        return nameProduct;
+    }
+
+    public void setNameProduct(String nameProduct) {
+        this.nameProduct = nameProduct;
+    }
+
+    public Double getInitialPrice() {
+        return initialPrice;
+    }
+
+    public void setInitialPrice(Double initialPrice) {
+        this.initialPrice = initialPrice;
+    }
+
+    public Double getFinalPrice() {
+        return finalPrice;
+    }
+
+    public void setFinalPrice(Double finalPrice) {
+        this.finalPrice = finalPrice;
+    }
+
+    public Double getIncrementPrice() {
+        return incrementPrice;
+    }
+
+    public void setIncrementPrice(Double incrementPrice) {
+        this.incrementPrice = incrementPrice;
+    }
+
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getRemainingTime() {
+        return remainingTime;
+    }
+
+    public void setRemainingTime(String remainingTime) {
+        this.remainingTime = remainingTime;
+    }
+
+    public LocalDateTime getCreatedDay() {
+        return createdDay;
+    }
+
+    public void setCreatedDay(LocalDateTime createdDay) {
+        this.createdDay = createdDay;
+    }
+
+    public Boolean getBiddingStatus() {
+        return biddingStatus;
+    }
+
+    public void setBiddingStatus(Boolean biddingStatus) {
+        this.biddingStatus = biddingStatus;
+    }
+
+    public Boolean getApprovalStatus() {
+        return approvalStatus;
+    }
+
+    public void setApprovalStatus(Boolean approvalStatus) {
+        this.approvalStatus = approvalStatus;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public List<ProductTransaction> getProductTransactions() {
+        return productTransactions;
+    }
+
+    public void setProductTransactions(List<ProductTransaction> productTransactions) {
+        this.productTransactions = productTransactions;
+    }
+
+    public List<ImageProduct> getImageProduct() {
+        return imageProduct;
+    }
+
+    public void setImageProduct(List<ImageProduct> imageProduct) {
+        this.imageProduct = imageProduct;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
 }
