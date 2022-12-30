@@ -25,18 +25,13 @@ public class CommonController {
     /* Get categories */
     @RequestMapping(value = "/categories", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCategories() {
-        List<Category> categories;
         try {
-            categories = categoryService.findAll();
+            List<Category> categories = categoryService.findAll();
+
+            return new ResponseEntity<>(categories, HttpStatus.OK);
         } catch (Exception ex) {
-            apiError = new ApiError(HttpStatus.BAD_REQUEST, "Something went wrong!", ex.getMessage());
+            apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         }
-
-        if (categories.isEmpty()) {
-            return new ResponseEntity<>("Category is empty!", HttpStatus.NO_CONTENT);
-        }
-
-        return ResponseEntity.ok(categories);
     }
 }
