@@ -8,16 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(value = "/auth")
+@RequestMapping(value = "/api/auth")
 public class SignUpController {
     @Autowired
     private AccountService accountService;
@@ -37,10 +40,13 @@ public class SignUpController {
     ApiError apiError = new ApiError();
 
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
-    public ResponseEntity<?> handleSignUp(@Valid @ModelAttribute UserRegisterDTO reqBody, BindingResult bindingResult) {
+    public ResponseEntity<?> handleSignUp(@Valid @RequestBody UserRegisterDTO reqBody, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            apiError = new ApiError(HttpStatus.BAD_REQUEST, "Credential invalid, Please check your input again");
-            return new ResponseEntity<>(apiError, apiError.getHttpStatus());
+            List<String> errors = new ArrayList<>();
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errors.add(error.getField() + ": " + error.getDefaultMessage());
+            }
+            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
 
         Account userExisting = null;
@@ -86,11 +92,13 @@ public class SignUpController {
 
             /* Save province */
             Province province = new Province();
-            province.setCity(reqBody.getCity());
-            province.setDistrict(reqBody.getDistrict());
-            province.setWard(reqBody.getWard());
-            Province provinceSaved = provinceService.save(province);
-            userSaved.setProvince(provinceSaved);
+            if (reqBody.getCity() != null || reqBody.getWard() != null || reqBody.getDistrict() != null) {
+                province.setCity(reqBody.getCity());
+                province.setDistrict(reqBody.getDistrict());
+                province.setWard(reqBody.getWard());
+                Province provinceSaved = provinceService.save(province);
+                userSaved.setProvince(provinceSaved);
+            }
 
             /* Initial authorization */
             Set<Role> roles = new HashSet<>();

@@ -1,6 +1,5 @@
 package auctionbe.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,7 +18,6 @@ public class Transport {
     private String transportName;
 
     @OneToMany(mappedBy = "transport")
-    @JsonBackReference(value = "transport_payment")
     private List<Payment> payments;
 
     public Transport() {}

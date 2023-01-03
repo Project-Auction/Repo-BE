@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/authenticate")
+@RequestMapping(value = "/api/authenticate")
 @CrossOrigin(origins = "*")
 public class SecurityController {
     @Autowired
@@ -60,7 +60,7 @@ public class SecurityController {
             apiError = new ApiError(HttpStatus.UNAUTHORIZED, "Login Failed!", ex.getMessage());
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         }
-        return ResponseEntity.ok(new JwtResponse(token , accountLoggedIn.getId() , accountLoggedIn.getEmail(), accountLoggedIn.getUser().getName() , accountLoggedIn.getRoles()));
+        return ResponseEntity.ok(new JwtResponse(token , accountLoggedIn.getUser().getId() , accountLoggedIn.getEmail(), accountLoggedIn.getUser().getName() , accountLoggedIn.getRoles()));
     }
 
     public void authenticate(String email, String password) throws Exception {
