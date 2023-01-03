@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -42,8 +43,13 @@ public class AccountService implements UserDetailsService {
     }
 
     /* Find by id */
-    public Account findAccountById(String id) {
-        return accountRepository.findById(id).orElse(null);
+    public Account findAccountById(String id) throws Exception {
+        Optional<Account> account = accountRepository.findById(id);
+        if(!account.isPresent()) {
+            throw new Exception("User doesn't existing");
+        }
+
+        return account.get();
     }
 
     /* Get user by token */

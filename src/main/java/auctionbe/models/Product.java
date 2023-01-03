@@ -1,11 +1,13 @@
 package auctionbe.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -17,47 +19,54 @@ public class Product {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String productId;
-
-    private String codeProduct;
-
     private String nameProduct;
-
-    private Double initialPrice;
-
-    private Double finalPrice;
-
-    private Double incrementPrice;
-
+    private double initialPrice;
+    private double finalPrice;
+    private double incrementPrice;
     private String productDescription;
+    private Date startDate;
 
-    private String startDate;
-
-    private String endDate;
+    private Date endDate;
 
     private String remainingTime;
 
     private LocalDateTime createdDay;
 
-    private Boolean biddingStatus;
+    private boolean biddingStatus;
 
-    private Boolean approvalStatus;
-
+    private boolean approvalStatus;
     @ManyToOne(targetEntity = Category.class)
-    @JoinColumn(name = "category_id" , nullable = false)
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     @OneToMany(mappedBy = "product")
     @JsonBackReference
     private List<ProductTransaction> productTransactions;
 
-    @OneToMany(mappedBy = "product")
-    private List<ImageProduct> imageProduct;
-
     @OneToOne(mappedBy = "product")
-    @JsonBackReference
     private Invoice invoice;
 
-    public Product() {}
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
+    private User user;
+
+    public Product() {
+    }
+
+    public Product(String nameProduct, double initialPrice, double finalPrice, double incrementPrice, String productDescription, Date startDate, Date endDate, boolean biddingStatus, boolean approvalStatus, User user, Category category) {
+        this.nameProduct = nameProduct;
+        this.initialPrice = initialPrice;
+        this.finalPrice = finalPrice;
+        this.incrementPrice = incrementPrice;
+        this.productDescription = productDescription;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.biddingStatus = biddingStatus;
+        this.approvalStatus = approvalStatus;
+        this.category = category;
+        this.user = user;
+    }
 
     public String getProductId() {
         return productId;
@@ -67,12 +76,12 @@ public class Product {
         this.productId = productId;
     }
 
-    public String getCodeProduct() {
-        return codeProduct;
+    public User getUser() {
+        return user;
     }
 
-    public void setCodeProduct(String codeProduct) {
-        this.codeProduct = codeProduct;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getNameProduct() {
@@ -115,19 +124,19 @@ public class Product {
         this.productDescription = productDescription;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -177,14 +186,6 @@ public class Product {
 
     public void setProductTransactions(List<ProductTransaction> productTransactions) {
         this.productTransactions = productTransactions;
-    }
-
-    public List<ImageProduct> getImageProduct() {
-        return imageProduct;
-    }
-
-    public void setImageProduct(List<ImageProduct> imageProduct) {
-        this.imageProduct = imageProduct;
     }
 
     public Invoice getInvoice() {

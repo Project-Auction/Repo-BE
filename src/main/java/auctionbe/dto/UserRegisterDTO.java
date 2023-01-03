@@ -1,9 +1,6 @@
 package auctionbe.dto;
 
-import auctionbe.models.Province;
 import org.hibernate.validator.constraints.Length;
-
-import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
@@ -12,7 +9,7 @@ public class UserRegisterDTO {
     public String fullName;
 
     @NotEmpty(message = "Birthday is not empty")
-    @Pattern(regexp = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$" , message = "Birthday is invalid")
+    @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$" , message = "Birthday is invalid")
     public String dateOfBirth;
 
     @NotEmpty(message = "Email cannot be empty")

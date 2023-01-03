@@ -6,9 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -45,23 +43,24 @@ public class User {
 
     @ManyToOne(targetEntity = Rank.class)
     @JoinColumn(name = "rank_id")
+    @JsonBackReference(value = "user-rank")
     private Rank rank;
 
     @OneToMany(mappedBy = "user")
-    @JsonBackReference
     private List<Invoice> invoices;
 
     @OneToMany(mappedBy = "user")
-    @JsonBackReference
     private List<Payment> payments;
 
     @OneToMany(mappedBy = "user")
-    @JsonBackReference
     private List<ProductTransaction> productTransactions;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "province_id", referencedColumnName = "province_id", nullable = true)
     private Province province;
+
+    @OneToMany(mappedBy = "user")
+    private List<Product> products;
 
     public User() {
     }
@@ -108,6 +107,14 @@ public class User {
 
     public String getIdentityNumber() {
         return identityNumber;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     public void setIdentityNumber(String identityNumber) {

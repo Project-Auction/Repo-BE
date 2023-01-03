@@ -5,10 +5,7 @@ import auctionbe.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class CategoryService {
@@ -23,5 +20,13 @@ public class CategoryService {
         }
 
         return categories;
+    }
+
+    public Category findById(Long id)  throws Exception{
+        Optional<Category> category = categoryRepository.findById(id);
+        if(!category.isPresent()) {
+            throw new Exception("Category doesn't existing");
+        }
+        return category.get();
     }
 }
