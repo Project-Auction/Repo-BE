@@ -1,18 +1,14 @@
 package auctionbe.models;
 
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 
 @Entity
 @Data
 public class ProductTransaction {
     @Id
-    @Column(name = "product_transaction_id")
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     public Boolean status;
 
@@ -28,11 +24,11 @@ public class ProductTransaction {
     public ProductTransaction() {
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

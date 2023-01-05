@@ -42,6 +42,15 @@ public class ProductService {
         }
     }
 
+    /* Find product with user id */
+    public List<Product> findProductByUserId(String userId) throws Exception {
+        List<Product> products = productRepository.findProductByUserId(userId);
+        if(products.size() == 0) {
+            throw new Exception("Product is empty");
+        }
+        return products;
+    }
+
     /* Find all */
     public List<Product> findAll() throws Exception {
         List<Product> products = productRepository.findAll();
