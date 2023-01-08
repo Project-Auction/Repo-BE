@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 
 @RestController
@@ -32,8 +34,11 @@ public class HomeController {
             List<Product> products = productService.findAll();
 
             return new ResponseEntity<>(products, HttpStatus.OK);
+        } catch (ResponseStatusException ex) {
+            apiError = new ApiError(ex.getStatus(), ex.getReason());
+            return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         } catch (Exception ex) {
-            apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getMessage());
+            apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         }
     }
@@ -45,8 +50,11 @@ public class HomeController {
             List<Category> categories = categoryService.findAll();
 
             return new ResponseEntity<>(categories, HttpStatus.OK);
+        } catch (ResponseStatusException ex) {
+            apiError = new ApiError(ex.getStatus(), ex.getReason());
+            return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         } catch (Exception ex) {
-            apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
+            apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         }
     }
@@ -58,8 +66,11 @@ public class HomeController {
             Category category = categoryService.findById(categoryId);
 
             return new ResponseEntity<>(category, HttpStatus.OK);
+        } catch (ResponseStatusException ex) {
+            apiError = new ApiError(ex.getStatus(), ex.getReason());
+            return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         } catch (Exception ex) {
-            apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
+            apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         }
     }
@@ -71,8 +82,11 @@ public class HomeController {
             User user = userService.findById(userId);
 
             return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (ResponseStatusException ex) {
+            apiError = new ApiError(ex.getStatus(), ex.getReason());
+            return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         } catch (Exception ex) {
-            apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
+            apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         }
     }

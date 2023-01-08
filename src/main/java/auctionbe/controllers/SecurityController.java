@@ -57,7 +57,7 @@ public class SecurityController {
             token = jwtTokenUtil.generateToken(userDetails);
             accountLoggedIn = accountService.findAccountByEmail(authenticateRequest.getEmail());
         } catch (Exception ex) {
-            apiError = new ApiError(HttpStatus.UNAUTHORIZED, "Login Failed!", ex.getMessage());
+            apiError = new ApiError(HttpStatus.UNAUTHORIZED, "Login Failed!");
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         }
         return ResponseEntity.ok(new JwtResponse(token , accountLoggedIn.getUser().getId() , accountLoggedIn.getEmail(), accountLoggedIn.getUser().getName() , accountLoggedIn.getRoles()));

@@ -50,7 +50,7 @@ public class PasswordController {
         try {
             account = accountService.findAccountByEmail(email);
         } catch (Exception ex) {
-            apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong! Please try again", ex.getMessage());
+            apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong! Please try again");
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         }
 
@@ -113,7 +113,7 @@ public class PasswordController {
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         } catch (Exception ex) {
             ex.printStackTrace();
-            apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong! Please try again", ex.getMessage());
+            apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong! Please try again");
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         }
 

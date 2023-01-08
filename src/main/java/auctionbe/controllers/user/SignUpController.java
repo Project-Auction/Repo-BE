@@ -58,7 +58,7 @@ public class SignUpController {
         try {
             userExisting = accountService.findAccountByEmail(reqBody.getEmail());
         } catch (Exception ex) {
-            apiError = new ApiError(HttpStatus.BAD_REQUEST, "Something went wrong. Please try again!", ex.getMessage());
+            apiError = new ApiError(HttpStatus.BAD_REQUEST, "Something went wrong. Please try again!");
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         }
 
@@ -72,7 +72,7 @@ public class SignUpController {
             reqBody.setPassword(hashPassword);
 
         } catch (Exception ex) {
-            apiError = new ApiError(HttpStatus.BAD_REQUEST, "Something went wrong. Please try again!", ex.getMessage());
+            apiError = new ApiError(HttpStatus.BAD_REQUEST, "Something went wrong. Please try again!");
             return new ResponseEntity<>(apiError, apiError.getHttpStatus());
         }
 

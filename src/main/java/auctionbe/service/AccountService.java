@@ -73,7 +73,6 @@ public class AccountService implements UserDetailsService {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         if (encoder.matches(newPassword, account.getPassword())) {
-//            throw new IllegalArgumentException("You used this password recently. Please choose a different one.");
             return true;
         }
         return false;
